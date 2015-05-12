@@ -2657,6 +2657,29 @@ test( "Inline event result is returned (#13993)", function() {
 	equal( result, 42, "inline handler returned value" );
 });
 
+test( "preventDefault() on focusin does not throw exception", function( assert ) {
+	expect( 1 );
+
+	var done = assert.async(),
+		input = jQuery( "<input>" ).appendTo( "#form" );
+		input
+			.on( "focusin", function( event ) {
+				var flawlessExecution = true;
+
+				try {
+					event.preventDefault();
+				} catch( theException ) {
+					flawlessExecution = false;
+				}
+
+				ok( flawlessExecution, "Preventing default on focusin throws no exception" );
+
+				input.remove();
+				done();
+			} )
+			.focus();
+} );
+
 // This tests are unreliable in Firefox
 if ( !(/firefox/i.test( window.navigator.userAgent )) ) {
 	test( "Check order of focusin/focusout events", 2, function() {
