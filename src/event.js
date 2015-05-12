@@ -616,7 +616,7 @@ jQuery.event = {
 			{
 				type: type,
 				isSimulated: true,
-				originalEvent: {}
+				originalEvent: new jQuery.Event()
 			}
 		);
 		if ( bubble ) {
